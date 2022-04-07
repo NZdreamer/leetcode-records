@@ -1,66 +1,95 @@
-// class Solution {
-//     public int[] searchRange(int[] nums, int target) {
-//         int idx = find(0, nums.length - 1, nums, target);
-//         if (idx == -1) return new int[]{-1, -1};
+class Solution {
+//   public int[] searchRange(int[] nums, int target) {
+//         int i = 0; 
+//         int j = nums.length - 1;
+//         int[] res = new int[]{-1, -1};
         
-//         int[] res = new int[]{idx, idx};
-//         while(res[0] >= 0 && nums[res[0]] == nums[idx]) {
-//             res[0]--;
+//         if (nums.length == 0) return res;
+        
+//             // Search for the left one
+//         while (i < j) {
+//             int mid = (i + j) / 2;
+//             if(nums[mid] < target) i = mid + 1;
+//             else j = mid;
 //         }
-//         while (res[1] < nums.length && nums[res[1]] == nums[idx]) {
-//             res[1]++;
+//         if (nums[i] != target) return res;
+//         else res[0] = i;
+        
+//           // Search for the right one
+//         j = nums.length - 1;  // We don't have to set i to 0 the second time.
+//         while (i < j) {
+//             int mid = (i + j) / 2;
+//             if (nums[mid] > target) j = mid - 1;
+//             else i = mid + 1;   // So that this won't make the search range stuck.
 //         }
-//         res[0]++; res[1]--;
+//         res[1] = j;
+        
 //         return res;
 //     }
-    
-//     private int find(int left, int right, int[] nums, int target) {
-//         if (left > right) {
-//             return -1;
-//         }
-//         int mid = (left + right) / 2;
-//         if (nums[mid] == target) {
-//             System.out.println("mid" + mid);
-//             return mid;
-//         }
-//         if (nums[mid] > target) {
-//             System.out.println("left");
-//             return find(left, mid - 1, nums, target);
-//         }
-//         if (nums[mid] < target) {
-//             System.out.println("right");
-//             return find(mid + 1, right, nums, target);
-//         }
-//         return -1;
-//     }
-// }
-
-class Solution {
+        
     public int[] searchRange(int[] nums, int target) {
-        int i = 0; 
-        int j = nums.length - 1;
-        int[] res = new int[]{-1, -1};
         
-        if (nums.length == 0) return res;
+        int[] result = new int[2];
+        result[0] = findFirst(nums,target);
+        result[1] = findLast(nums,target);
+        return result;
         
-            // Search for the left one
-        while (i < j) {
-            int mid = (i + j) / 2;
-            if(nums[mid] < target) i = mid + 1;
-            else j = mid;
+    }
+    
+    public int findFirst(int[] nums, int target){
+        
+        int result = -1;
+        int low = 0;
+        int high = nums.length - 1;
+
+        while(low <= high){
+            int mid = low + ((high-low)/2);
+
+            if (nums[mid] < target){
+                low = mid +1;
+            } else if (nums[mid] > target){
+                high = mid - 1;
+            } else { // nums[mid] == target
+                result = mid;
+
+                // because nothing after mid
+                // can be the first occurance of target.
+                //maybe mid is the first occurance , maybe not
+                //so let's narrow the target for [0...mid-1] and find out
+                high = mid - 1; 
+   
+            }
         }
-        if (nums[i] != target) return res;
-        else res[0] = i;
+
+        return result;
+  
+    }
+    
+        public int findLast(int[] nums, int target){
         
-          // Search for the right one
-        j = nums.length - 1;  // We don't have to set i to 0 the second time.
-        while (i < j) {
-            int mid = (i + j) / 2 + 1;
-            if (nums[mid] > target) j = mid - 1;
-            else i = mid;   // So that this won't make the search range stuck.
+        int result = -1;
+        int low = 0;
+        int high = nums.length - 1;
+        
+        while(low <= high){
+            
+            int mid = low + (high-low)/2;
+            
+            if (nums[mid] < target){
+                low = mid +1;
+            } else if (nums[mid] > target){
+                high = mid - 1;
+            } else { // nums[mid] == target
+                result = mid;
+                // because nothing before mid
+                // can be the last occurance of target.
+                //maybe mid is the last occurance , maybe not
+                //so let's narrow the target for [mid+1...high] and find out
+                low = mid + 1;
+   
+            }
         }
-        res[1] = j;
-        
-        return res;
+
+        return result;
     }
 }

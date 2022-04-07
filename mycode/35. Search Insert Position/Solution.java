@@ -14,8 +14,8 @@ class Solution {
             }
         }
         
-        if (target > nums[nums.length - 1]) return nums.length;
-        
-        return i;
+        // if (target > nums[nums.length - 1]) return nums.length;
+        if (nums[i] < target) return i + 1;        
+        else return i;
     }
 }
