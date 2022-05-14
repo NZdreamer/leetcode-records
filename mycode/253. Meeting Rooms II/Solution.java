@@ -33,3 +33,27 @@ class Solution {
         return cnt;
     }
 }
+
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        // sort intervals by the start time
+        Arrays.sort(intervals, (a, b) -> (a[0] - b[0]));
+        
+        // initialize a heap, representing the ongoing meeting
+        PriorityQueue<Integer> heap = new PriorityQueue();
+        int res = 0;
+        // traverse the sorted intervals
+        // while start time >= top of the heap, poll
+        // push the end time in the min heap
+        for (int[] interval : intervals) {
+            while (heap.size() != 0 && interval[0] >= heap.peek()) {
+                heap.poll();
+            }
+            heap.add(interval[1]);
+            res = Math.max(res, heap.size());
+        }
+        
+        // return the max size of the heap during 
+        return res;
+    }
+}
