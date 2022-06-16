@@ -10,7 +10,7 @@ import java.util.HashSet;
 class Solution {
     public boolean isHappy(int n) {
         int sum = 0;
-        HashSet<Integer> set = new HashSet();
+        HashSet<Integer> set = new HashSet<>();
         while (!set.contains(n)) {
             if (n == 1) return true;
             set.add(n);
