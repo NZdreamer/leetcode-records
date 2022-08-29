@@ -15,8 +15,8 @@ public class Microsoft_oa {
         int res = 0;
         for (int i = 0; i < A.length(); i++) {
             for (int j = i; j < A.length(); j++) {
-                HashMap<Character, Integer> hma = new HashMap();
-                HashMap<Character, Integer> hmb = new HashMap();
+                HashMap<Character, Integer> hma = new HashMap<>();
+                HashMap<Character, Integer> hmb = new HashMap<>();
                 boolean flag = true;
                 for (int k = i; k <= j; k++) {
                     hma.put(arra[k], hma.getOrDefault(arra[k], 0) + 1);
