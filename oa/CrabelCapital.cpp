@@ -7,7 +7,7 @@ using namespace std;
 vector<int> path;
 int minValue = INT_MAX;
 
-void dfs(vector<vector<int>> graph, int layer, vector<int> tmp, int dest, int node, unordered_set<int> set) {
+void dfs(vector<vector<int>>& graph, int layer, vector<int>& tmp, int dest, int node, unordered_set<int>& set) {
   //cout << layer << " ";
   if (node == dest) {
     if (layer < minValue) {
