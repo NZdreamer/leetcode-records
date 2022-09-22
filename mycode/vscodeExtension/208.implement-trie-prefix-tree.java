@@ -6,21 +6,39 @@
 
 // @lc code=start
 class Trie {
+    Trie[] children;
+    boolean isWord;
 
     public Trie() {
-        
+        children = new Trie[26];
+        isWord = false;
     }
     
     public void insert(String word) {
-        
+        Trie p = this;
+        for (char w : word.toCharArray()) {            
+            p = p.children[w - 'a'];
+            if (p == null) p = new Trie();
+        }
+        p.isWord = true;
     }
     
     public boolean search(String word) {
-        
+        Trie p = this;
+        for (char w : word.toCharArray()) {
+            p = p.children[w - 'a'];
+            if (p == null) return false;
+        }
+        return p.isWord;
     }
     
     public boolean startsWith(String prefix) {
-        
+        Trie p = this;
+        for (char c : prefix.toCharArray()) {
+            p = p.children[c - 'a'];
+            if (p == null) return false;
+        }
+        return true;
     }
 }
 
